@@ -1,5 +1,6 @@
 const path = require('path');
 const assert = require('assert');
+const expect = require('chai').expect;
 const common = require('../../common.js');
 const CommandGlobals = require('../../lib/globals/commands.js');
 const MockServer = require('../../lib/mockserver.js');
@@ -81,9 +82,9 @@ describe('testRunWithExclude', function() {
     const settings = Object.assign({
       globals: {
         reporter(results, cb) {
-          assert.ok('excluded/excluded-module' in results.modules);
-          assert.ok('excluded/not-excluded' in results.modules);
-          assert.ok(!('simple/sample' in results.modules));
+          expect(results.modules).to.have.property('excluded/excluded-module');
+          expect(results.modules).to.have.property('excluded/not-excluded');
+          expect(results.modules).to.not.have.property('simple/sample');
 
           cb();
         }
