@@ -30,11 +30,25 @@ describe('test TagsMatcher', function() {
   describe('matching', function () {
     const testCases = [
       [
-        'matching tags',
+        'matching single filter tag',
         ['home', 'login', 'sign-up'],
+        ['home'],
+        undefined,
+        true,
+      ],
+      [
+        'multiple filter tags as AND match',
+        ['home', 'login', 'siberia', 'sign-up'],
         ['home', 'siberia'],
         undefined,
         true,
+      ],
+      [
+        'multiple filter tags as AND do not match',
+        ['home', 'login', 'sign-up'],
+        ['home', 'siberia'],
+        undefined,
+        false,
       ],
       [
         'non-matching tags',
@@ -53,7 +67,7 @@ describe('test TagsMatcher', function() {
       [
         'numeric tags',
         ['101'],
-        ['room', 101],
+        [101],
         undefined,
         true,
       ],
@@ -135,9 +149,16 @@ describe('test TagsMatcher', function() {
   describe('loading and matching', function(){
     const testCases = [
       [
-        'module with tags',
+        'module with tags single filter tag',
         'sampletests/tags/sample.js',
-        ['home', 'login', 'sign-up'],
+        ['login'],
+        undefined,
+        true,
+      ],
+      [
+        'module with tags multiple filter tags',
+        'sampletests/tags/sample.js',
+        ['login', 'other'],
         undefined,
         true,
       ],
